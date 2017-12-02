@@ -1,4 +1,4 @@
-C_Programing/C_Labs
 *.exe
 *.pdf
 *.txt
+.vscode/**
