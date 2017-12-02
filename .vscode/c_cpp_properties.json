@@ -1,18 +1,15 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Linux",
             "intelliSenseMode": "clang-x64",
             "includePath": [
                 "${workspaceFolder}",
-                "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++",
-                "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++/x86_64-w64-mingw32",
-                "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++/backward",
-                "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include",
-                "C:/llvm/include",
-                "C:/llvm/x86_64-w64-mingw32/include",
-                "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed",
-                "/usr/include/c++"
+                "/usr/include/c++/6/",
+                "/usr/include/c++/6/bits",
+                "/usr/include/clang/4.0/include/",
+                "/usr/include/",
+                "/usr/include/x86_64-linux-gnu/c++/"
             ],
             "defines": [
                 "_DEBUG",
@@ -22,15 +19,11 @@
             ],
             "browse": {
                 "path": [
-                    "${workspaceFolder}",
-                    "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++",
-                    "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++/x86_64-w64-mingw32",
-                    "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++/backward",
-                    "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include",
-                    "C:/llvm/include",
-                    "C:/llvm/x86_64-w64-mingw32/include",
-                    "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed",
-                    "/usr/include/c++"
+                    "/usr/include/",
+                    "/usr/include/c++/6/",
+                    "/usr/include/c++/6/bits",
+                    "/usr/include/clang/4.0/include/",
+                    "/usr/include/x86_64-linux-gnu/c++/"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
