@@ -2,3 +2,4 @@ C_Programing/C_Labs
 *.exe
 *.pdf
 *.txt
+.vscode/c_cpp_properties.json
