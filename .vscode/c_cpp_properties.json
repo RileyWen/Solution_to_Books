@@ -11,7 +11,8 @@
                 "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include",
                 "C:/llvm/include",
                 "C:/llvm/x86_64-w64-mingw32/include",
-                "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed"
+                "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed",
+                "/usr/include/c++"
             ],
             "defines": [
                 "_DEBUG",
@@ -28,7 +29,8 @@
                     "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include",
                     "C:/llvm/include",
                     "C:/llvm/x86_64-w64-mingw32/include",
-                    "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed"
+                    "C:/llvm/lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed",
+                    "/usr/include/c++"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
