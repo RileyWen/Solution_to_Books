@@ -1,5 +1,4 @@
-**/c_cpp_properties.json
-C_Programing/C_Labs
 *.exe
 *.pdf
 *.txt
+*.json

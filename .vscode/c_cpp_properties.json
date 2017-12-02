@@ -6,10 +6,7 @@
             "includePath": [
                 "${workspaceFolder}",
                 "/usr/include/c++/6/",
-                "/usr/include/c++/6/bits",
-                "/usr/include/clang/4.0/include/",
-                "/usr/include/",
-                "/usr/include/x86_64-linux-gnu/c++/"
+                "/usr/include/x86_64-linux-gnu/c++/6"                
             ],
             "defines": [
                 "_DEBUG",
@@ -19,11 +16,8 @@
             ],
             "browse": {
                 "path": [
-                    "/usr/include/",
                     "/usr/include/c++/6/",
-                    "/usr/include/c++/6/bits",
-                    "/usr/include/clang/4.0/include/",
-                    "/usr/include/x86_64-linux-gnu/c++/"
+                    "/usr/include/x86_64-linux-gnu/c++/6"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

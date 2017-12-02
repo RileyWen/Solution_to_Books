@@ -1,6 +1,6 @@
 #include <iostream>
-#include <time.h>
-#include <stdlib.h>
+#include <ctime>
+#include <cstdlib>
 using namespace std;
 char map[12][12]={{'A','A','A','A','A','A','A','A','A','A','A','A'},
 				  {'A','A', 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,'A'},
