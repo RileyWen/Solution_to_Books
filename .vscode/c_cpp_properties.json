@@ -4,7 +4,6 @@
             "name": "Linux",
             "intelliSenseMode": "clang-x64",
             "includePath": [
-                "${workspaceFolder}",
                 "/usr/include/c++/6/",
                 "/usr/include/x86_64-linux-gnu/c++/6"                
             ],
