@@ -70,12 +70,26 @@ template <typename T> class Stack{
     }
 };
 
+struct _Operator{
+    char _operator;
+    unsigned int priority;
+};
+
+void init(_Operator *opt){
+    opt[0]._operator = '+';
+    opt[1]._operator = '-';
+    opt[0].priority = opt[1].priority = 0;
+    opt[2]._operator = '*';
+    opt[3]._operator = '/';
+    opt[0].priority = opt[1].priority = 1;
+    opt[4]._operator = '^';
+    opt[4].priority = 2;
+}
+
 int main(){
-    Stack<int> s;
-    s.push(1);
-    s.push(2);
-    s.push(3);
-    //s.popall();
-    cout << s.pop() << s.pop() << s.pop();
+    _Operator Operator[5];
+    init(Operator);
+    Stack<char> operators;
+    Stack<double> num;
     return 0;
 }
