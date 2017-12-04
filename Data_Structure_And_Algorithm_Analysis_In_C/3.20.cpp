@@ -91,6 +91,6 @@ int main(){
     init(Operator);
     Stack<char> operators;
     Stack<double> num;
-    num
+    
     return 0;
 }
