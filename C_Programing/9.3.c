@@ -16,7 +16,7 @@ void print_array(char map[12][12]){
 	int i,j;
 	for (i=1;i<=10;printf("\n"),i++)
 		for (j=1;j<=10;j++)
-			printf("%c ",map[i][j]?map[i][j]:'.');
+			printf("%c ",map[i][j]?map[i][j]:'.'); 
 }
 int main(){
 	char x[4]={ 0, 0,-1, 1},y[4]={ 1,-1, 0, 0};
