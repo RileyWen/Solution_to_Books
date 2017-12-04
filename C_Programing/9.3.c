@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <stdlib.h>
 void generate_random_walk(char map[12][12],char x[4],char y[4]){
 	char cnt=1,i=1,j=1,tmp;
 	srand(time(0));
