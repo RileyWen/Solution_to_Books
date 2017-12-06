@@ -1,4 +1,8 @@
 #include <iostream>
+#include <string>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 using namespace std;
 
 template <typename T> class Stack_Node{
@@ -56,24 +60,48 @@ template <typename T> class Stack{
             this->size--;
             return element_tmp;
         }
-        else
-            return {};
+        else{
+            char return_zero[sizeof(T)];
+            memset(return_zero, 0, sizeof(T));
+            return *((T *)(&return_zero[0]));
+        }
+        
     }
 
     bool isempty(){
-        return (this->top->Next == NULL);
+        return (this->size == 0);
     }
 
     void popall(){
         while (!(this->isempty()))
             this->pop();
     }
+
+    T* gettop(){
+        return &(this->top->element);
+    }
 };
 
 struct _Operator{
-    char _operator;
-    unsigned int priority;
+    char _operator = 0;
+    int priority = 0;
+    bool left_combine = true;
 };
+
+int SignToIndex(char sign){
+    switch (sign){
+        case '+':
+            return 0;
+        case '-':
+            return 1;
+        case '*':
+            return 2;
+        case '/':
+            return 3;
+        case '^':
+            return 4;
+        }
+}
 
 void init(_Operator *opt){
     opt[0]._operator = '+';
@@ -81,16 +109,99 @@ void init(_Operator *opt){
     opt[0].priority = opt[1].priority = 0;
     opt[2]._operator = '*';
     opt[3]._operator = '/';
-    opt[0].priority = opt[1].priority = 1;
+    opt[2].priority = opt[3].priority = 1;
     opt[4]._operator = '^';
     opt[4].priority = 2;
+    opt[4].left_combine = false;
 }
 
-int main(){
-    _Operator Operator[5];
-    init(Operator);
-    Stack<char> operators;
+double GetNum(char* expression, int& cursor){
+    if (expression[cursor]<='9' && expression[cursor]>='0'){
+        double interger = 0.0f, frac = 0.0f;
+        int cnt = 0;
+        bool isfrac = false;
+        while (true)
+        {
+            //printf("%d", 1);
+            if (expression[cursor] <= '9' && expression[cursor] >= '0')
+            {
+                if (!isfrac){
+                    interger = interger * 10 + double(expression[cursor++] - '0');
+                }
+                else{
+                    cnt++;
+                    double frac_tmp = double(expression[cursor++] - '0');
+                    for (int i = 1; i <= cnt; i++)
+                        frac_tmp /= 10;
+                    frac += frac_tmp;
+                }
+            }
+            else if (expression[cursor]=='.'){
+                isfrac = true;
+                cursor++;
+            }
+            else
+                break;
+        }
+        double result = interger + frac;
+        return result;
+    }
+}
+int main()
+{
+    _Operator Operator[5], tmp;
+    char expression[1000] = {};
+    int cursor = 0, element_cnt = 0;
+    Stack<_Operator> operators;
     Stack<double> num;
-    
+    bool isSign[1000] = {};
+
+    init(Operator);
+    operators.gettop()->priority = -1;
+
+    gets(expression);
+    while (expression[cursor])
+    {
+        
+        //printf("%d", 1);
+        if (expression[cursor]<='9' && expression[cursor]>='0'){
+            printf("%.0lf ",GetNum(expression, cursor));
+            isSign[++element_cnt] = false;
+        }
+        else if(expression[cursor]){
+            //printf("%c %c\n", Operator[SignToIndex(expression[cursor])]._operator, operators.gettop()->_operator);
+            
+            //printf("%d %d", Operator[SignToIndex(expression[cursor])].priority, operators.gettop()->priority);
+            //getchar();
+            _Operator current_operator = Operator[SignToIndex(expression[cursor])];
+            if ((current_operator.priority > operators.gettop()->priority)
+                 || (current_operator.priority == operators.gettop()->priority && !current_operator.left_combine))
+            {
+                //printf("cursor:%d\n",cursor);
+                operators.push(current_operator);
+                cursor++;
+            }
+            else{
+                //printf("cursor:%d\n",SignToIndex(expression[cursor]));
+                while (tmp = operators.pop(),
+                       printf("%c ", tmp._operator),
+                       operators.gettop()->priority >= current_operator.priority)
+                {
+                    //printf("%d %d", operators.gettop()->priority,current.priority);
+                    //getchar();
+                }
+                operators.push(current_operator);
+                cursor++;           }
+                isSign[++element_cnt] = true;
+            }
+        else
+            break;
+    }
+    while(!operators.isempty())
+            {
+                printf("");
+                tmp = operators.pop();
+                printf("%c ", tmp._operator);
+            }
     return 0;
 }
