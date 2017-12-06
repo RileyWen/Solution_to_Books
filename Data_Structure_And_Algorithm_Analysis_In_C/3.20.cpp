@@ -1,7 +1,7 @@
 #include <iostream>
-#include <string>
 #include <cstdio>
 #include <cstdlib>
+#include <cmath>
 #include <cstring>
 using namespace std;
 
@@ -100,6 +100,10 @@ int SignToIndex(char sign){
             return 3;
         case '^':
             return 4;
+        case '(':
+            return 5;
+        case ')':
+            return 6;
         }
 }
 
@@ -113,6 +117,10 @@ void init(_Operator *opt){
     opt[4]._operator = '^';
     opt[4].priority = 2;
     opt[4].left_combine = false;
+    opt[5]._operator = '(';
+    opt[6]._operator = ')';
+    opt[5].priority = 100;
+    opt[6].priority = 100;
 }
 
 double GetNum(char* expression, int& cursor){
@@ -146,10 +154,36 @@ double GetNum(char* expression, int& cursor){
         double result = interger + frac;
         return result;
     }
+    exit(-1);
 }
+
+void compute(Stack<double>& num,_Operator op){
+    double num2 = num.pop();
+    double num1 = num.pop();
+    switch (op._operator){
+        case '+':
+            num.push(num1 + num2);
+            break;
+        case '-':
+            num.push(num1 - num2);
+            break;
+        case '*':
+            num.push(num1 * num2);
+            break;
+        case '/':
+            num.push(num1 / num2);
+            break;
+        case '^':
+            num.push(pow(num1, num2));
+            break;
+        default:
+            exit(-1);
+        }
+}
+
 int main()
 {
-    _Operator Operator[5], tmp;
+    _Operator Operator[7], tmp;
     char expression[1000] = {};
     int cursor = 0, element_cnt = 0;
     Stack<_Operator> operators;
@@ -157,7 +191,7 @@ int main()
     bool isSign[1000] = {};
 
     init(Operator);
-    operators.gettop()->priority = -1;
+    operators.gettop()->priority = -2;
 
     gets(expression);
     while (expression[cursor])
@@ -165,7 +199,8 @@ int main()
         
         //printf("%d", 1);
         if (expression[cursor]<='9' && expression[cursor]>='0'){
-            printf("%.0lf ",GetNum(expression, cursor));
+            //printf("%.0lf ",GetNum(expression, cursor));
+            num.push(GetNum(expression, cursor));
             isSign[++element_cnt] = false;
         }
         else if(expression[cursor]){
@@ -174,8 +209,23 @@ int main()
             //printf("%d %d", Operator[SignToIndex(expression[cursor])].priority, operators.gettop()->priority);
             //getchar();
             _Operator current_operator = Operator[SignToIndex(expression[cursor])];
-            if ((current_operator.priority > operators.gettop()->priority)
-                 || (current_operator.priority == operators.gettop()->priority && !current_operator.left_combine))
+            if (current_operator._operator == '('){
+                operators.push(current_operator);
+                cursor++;
+                continue;
+            }
+            if (current_operator._operator == ')'){
+                cursor++;           //pop ')'
+                while (!operators.isempty() && (operators.gettop())->_operator != '(')
+                {
+                    //printf("%c ", (operators.pop())._operator);
+                    compute(num, operators.pop());
+                }
+                operators.pop();    //pop '('
+                continue;
+            }
+            if ((current_operator.priority > (operators.gettop())->priority)
+                 || (current_operator.priority == (operators.gettop())->priority && !current_operator.left_combine))
             {
                 //printf("cursor:%d\n",cursor);
                 operators.push(current_operator);
@@ -183,25 +233,27 @@ int main()
             }
             else{
                 //printf("cursor:%d\n",SignToIndex(expression[cursor]));
-                while (tmp = operators.pop(),
-                       printf("%c ", tmp._operator),
-                       operators.gettop()->priority >= current_operator.priority)
-                {
-                    //printf("%d %d", operators.gettop()->priority,current.priority);
-                    //getchar();
-                }
-                operators.push(current_operator);
-                cursor++;           }
-                isSign[++element_cnt] = true;
+                    while(operators.gettop()->_operator!= '(' && operators.gettop()->priority >= current_operator.priority){
+                        //printf("%d %d", operators.gettop()->priority,current.priority);
+                        //getchar();
+                        //printf("%c ", operators.pop()._operator);
+
+                        compute(num, operators.pop());
+                    }
+                    operators.push(current_operator);
+                    cursor++;
             }
+            isSign[++element_cnt] = true;
+        }
         else
             break;
     }
     while(!operators.isempty())
-            {
-                printf("");
-                tmp = operators.pop();
-                printf("%c ", tmp._operator);
-            }
+    {
+        //tmp = operators.pop();
+        //printf("%c ", tmp._operator);
+        compute(num, operators.pop());
+    }
+    printf("%.0lf", num.pop());
     return 0;
 }
