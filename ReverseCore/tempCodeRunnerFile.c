@@ -1,0 +1,2 @@
+CreateFile(szFile, GENERIC_READ, FILE_SHARE_READ,
+                              NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
