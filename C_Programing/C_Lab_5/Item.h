@@ -21,5 +21,6 @@ void info_output(pItem item[], int item_cnt, int i);
 void info_change(pItem item[], int item_cnt, const char *szItemName);
 void info_delete(pItem item[], int *item_cnt, const char *szItemName);
 void info_insert(pItem item[], int *item_cnt);
+void info_flush(pItem item[], int item_cnt);
 
 #endif

@@ -50,6 +50,7 @@ void OutputAll(pItem item[],int item_cnt){
             num++;
             printf("Item name:%s\n", item[cursor]->szItemName);
             printf("Item price:%d\n", item[cursor]->dPrice);
+            cursor++;
         }
     }
 }
@@ -58,8 +59,11 @@ void myfree(pItem item[],int item_cnt){
     int i = 0, cursor = 0;
     while (i<item_cnt){
         free(item[cursor]);
-        if (item[cursor]->bDetele)
+        if (item[cursor]->bDetele){
             cursor++;
+            continue;
+        }
+        cursor++;
         i++;
     }
 }
@@ -156,8 +160,39 @@ void info_insert(pItem item[], int *item_cnt){
     item[i]->bDetele = false;
     printf("Enter the name of new item: ");
     scanf("%s", item[i]->szItemName);
+    getchar();
     printf("Enter the price of new item: ");
-    //scanf("%d", &item[i]->dPrice);
+    scanf("%d", &item[i]->dPrice);
+    getchar();
     (*item_cnt)++;
     return;
+}
+
+void info_flush(pItem item[], int item_cnt){
+    FILE *pFile = fopen("./items.txt", "w+");
+    if (NULL ==pFile){
+        return;
+    }
+    else{
+        if (!item_cnt){
+            fprintf(pFile, "0\n");
+            fclose(pFile);
+            return;
+        }
+        fprintf(pFile, "%d\n", item_cnt);
+        int cursor = 0, num = 0;
+        while (num < item_cnt)
+        {
+            if (item[cursor]->bDetele){
+                cursor++;
+            }
+            else{
+                num++;
+                fprintf(pFile, "%s ", item[cursor]->szItemName);
+                fprintf(pFile, "%d\n", item[cursor]->dPrice);
+                cursor++;
+            }
+        }
+    }
+    fclose(pFile);
 }
