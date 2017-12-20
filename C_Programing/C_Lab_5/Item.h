@@ -15,9 +15,11 @@ typedef struct _Item{
 void info_init(pItem item[],int *item_cnt);
 void OutputAll(pItem item[], int item_cnt);
 void myfree(pItem item[],int item_cnt);
-void parse_command(char command[],int *argc,char *argv[]);
-void info_search(pItem item[], int item_cnt, const char* szItemName);
+void parse_command(char command[], int *argc, char *argv[]);
+void info_search(pItem item[], int item_cnt, const char *szItemName);
 void info_output(pItem item[], int item_cnt, int i);
-void info_change(pItem item[], int item_cnt, const char* szItemName);
+void info_change(pItem item[], int item_cnt, const char *szItemName);
+void info_delete(pItem item[], int *item_cnt, const char *szItemName);
+void info_insert(pItem item[], int *item_cnt);
 
 #endif

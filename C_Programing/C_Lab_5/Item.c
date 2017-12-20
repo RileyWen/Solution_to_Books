@@ -1,9 +1,28 @@
 #include "Item.h"
 
+int search_by_name(pItem item[], int item_cnt, const char* szItemName){
+    int cursor = 0, i = 0;
+    while (i < item_cnt){
+        if (item[cursor]->bDetele){
+            cursor++;
+        }
+        else{
+            i++;
+            if (strcmp(item[cursor]->szItemName, szItemName))
+                cursor++;
+            else{
+                return cursor;
+            }
+        }
+    }
+    return -1;
+}
+
 void info_init(pItem item[],int *item_cnt){
     FILE *pFile;
-    if (NULL==(pFile = fopen(".\\items.txt", "r"))){
+    if (NULL ==(pFile = fopen("./items.txt", "r"))){
         *item_cnt = 0;
+        return;
     }
     else{
         fscanf(pFile, "%d", item_cnt);
@@ -21,14 +40,28 @@ void OutputAll(pItem item[],int item_cnt){
         printf("No item!\n");
         return;
     }
-    for (int i = 0; i < item_cnt; i++){
-       printf("Item %d\n\tItem name:%s\n\tItem price:%d\n", i+1, item[i]->szItemName, item[i]->dPrice);
+    int cursor = 0, num = 0;
+    while (num < item_cnt)
+    {
+        if (item[cursor]->bDetele){
+            cursor++;
+        }
+        else{
+            num++;
+            printf("Item name:%s\n", item[cursor]->szItemName);
+            printf("Item price:%d\n", item[cursor]->dPrice);
+        }
     }
 }
 
 void myfree(pItem item[],int item_cnt){
-    for (int i = 0; i < item_cnt; i++)
-        free(item[i]);
+    int i = 0, cursor = 0;
+    while (i<item_cnt){
+        free(item[cursor]);
+        if (item[cursor]->bDetele)
+            cursor++;
+        i++;
+    }
 }
 
 void parse_command(char command[],int *argc,char *argv[]){
@@ -50,31 +83,19 @@ void parse_command(char command[],int *argc,char *argv[]){
 }
 
 void info_search(pItem item[], int item_cnt, const char* szItemName){
-    int cursor = 0, i = 0;
-    bool isfound = false;
-    while (i < item_cnt){
-        if (item[cursor]->bDetele){
-            cursor++;
-        }
-        else{
-            i++;
-            if (strcmp(item[cursor]->szItemName, szItemName))
-                cursor++;
-            else{
-                printf("Item price:%d\n", item[cursor]->dPrice);
-                isfound = true;
-                break;
-            }
-        }
-    }
-    if (!isfound)
-        printf("Not Found\n");
+    int index = search_by_name(item, item_cnt, szItemName);
+    if (index == -1)
+        printf("Not found!\n");
+    else
+        printf("Item price:%d\n", item[index]->dPrice);
 }
 
 void info_output(pItem item[], int item_cnt, int i){
     int cursor = 0, num = 0;
     bool isfound = false;
-    while (num < item_cnt){
+    //printf("cursor:%d\n", cursor);
+    while (num < item_cnt)
+    {
         if (item[cursor]->bDetele){
             cursor++;
         }
@@ -93,24 +114,50 @@ void info_output(pItem item[], int item_cnt, int i){
 }
 
 void info_change(pItem item[], int item_cnt, const char* szItemName){
-    int cursor = 0, i = 0;
-    bool isfound = false;
-    while (i < item_cnt){
-        if (item[cursor]->bDetele){
-            cursor++;
-        }
-        else{
-            i++;
-            if (strcmp(item[cursor]->szItemName, szItemName))
-                cursor++;
-            else{
-                printf("Item price to change:");
-                scanf("%d", &item[cursor]->dPrice);
-                isfound = true;
-                break;
-            }
-        }
+    int index = search_by_name(item, item_cnt, szItemName);
+    if (index == -1)
+        printf("Not found!\n");
+    else{
+        printf("Item price to change:");
+        scanf("%d", &item[index]->dPrice);
     }
-    if (!isfound)
-        printf("Not Found\n");
+}
+
+void info_delete(pItem item[], int *item_cnt, const char *szItemName){
+    int index = search_by_name(item, *item_cnt, szItemName);
+    if (index == -1)
+        printf("Not found!\n");
+    else{
+        printf("index:%d\n", index);
+        (*item_cnt)--;
+        item[index]->bDetele = true;
+    }
+}
+
+void info_insert(pItem item[], int *item_cnt){
+    int i = 0;
+    while(i<*item_cnt){
+        if (item[i]->bDetele){
+            item[i]->bDetele = false;
+            printf("Enter the name of new item: ");
+            scanf("%s", item[i]->szItemName);
+            printf("Enter the price of new item: ");
+            //scanf("%d", &item[i]->dPrice);
+            (*item)++;
+            return;
+        }
+        else
+            i++;
+    }
+    printf("%d", i);
+    item[i] = (pItem)malloc(sizeof(Item));
+    if (item[i]==NULL)
+        return;
+    item[i]->bDetele = false;
+    printf("Enter the name of new item: ");
+    scanf("%s", item[i]->szItemName);
+    printf("Enter the price of new item: ");
+    //scanf("%d", &item[i]->dPrice);
+    (*item_cnt)++;
+    return;
 }
