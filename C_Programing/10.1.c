@@ -41,6 +41,7 @@ char pop(void){
     else
         return contents[--top];
 }
+
 int main(){
     char tmp;
     while ((tmp=getchar())!='\n'){
@@ -48,18 +49,16 @@ int main(){
             push(tmp);
             continue;
         }
-        if (tmp=='}'){
+        if (tmp=='}')
             if (pop()!='{'){
                 printf("Parenteses/braces are not nested properly");
                 return 0;
             }
-        }
-        if (tmp==')'){
+        if (tmp==')')
             if (pop()!='('){
                 printf("Parenteses/braces are not nested properly");
                 return 0;
             }
-        }
     }
     if (!is_empty()||once_underflow)
         printf("Parenteses/braces are not nested properly");
