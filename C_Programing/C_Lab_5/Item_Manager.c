@@ -1,7 +1,7 @@
 #include "Item.h"
 int main(int argc,char **argv){
     char command[255], *_argv[255];
-    pItem item[255]={};
+    pItem item[255]={0};
     int item_cnt = 0, _argc = 0;
 
     info_init(item, &item_cnt);

@@ -58,13 +58,12 @@ void OutputAll(pItem item[],int item_cnt){
 void myfree(pItem item[],int item_cnt){
     int i = 0, cursor = 0;
     while (i<item_cnt){
-        free(item[cursor]);
-        if (item[cursor]->bDetele){
-            cursor++;
-            continue;
+        if (item[cursor]->bDetele)
+            free(item[cursor++]);
+        else{
+            free(item[cursor++]);
+            i++;
         }
-        cursor++;
-        i++;
     }
 }
 
