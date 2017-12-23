@@ -145,8 +145,10 @@ void info_insert(pItem item[], int *item_cnt){
             item[i]->bDetele = false;
             printf("Enter the name of new item: ");
             scanf("%s", item[i]->szItemName);
+            getchar();
             printf("Enter the price of new item: ");
-            //scanf("%d", &item[i]->dPrice);
+            scanf("%d", &item[i]->dPrice);
+            getchar();
             (*item)++;
             return;
         }
