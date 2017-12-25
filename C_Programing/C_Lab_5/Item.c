@@ -197,3 +197,56 @@ void info_flush(pItem item[], int item_cnt){
     }
     fclose(pFile);
 }
+
+void output_help(){
+    printf("--------------help--------------\n");
+    printf("To insert an item:\n\tinsert\n");
+    printf("To delete an item:\n\tdelete <Item-name>\n");
+    printf("To output:\n\toutput [index]\t If no index, output all item. Otherwise, output the item by index.\n");
+    printf("To search item:\n\tsearch <Item-name>\n");
+    printf("To change the item info:\n\tchange <Item-name>\n");
+    printf("To save:\t\nsave\n");
+    printf("To save and quit:\n\tq\n");
+    printf("To display help info:\n\thelp\n");
+}
+
+int sort_by_name(const void *a, const void *b){
+    //printf("A:%s\nB:%s\n",(*(pItem*)a)->szItemName,(*(pItem*)b)->szItemName);
+    return strcmp((*(pItem*)a)->szItemName, (*(pItem*)b)->szItemName);
+}
+
+int sort_by_price(const void *a,const void *b){
+    return (*(pItem*)b)->dPrice - (*(pItem*)a)->dPrice;
+}
+
+void sort(pItem item[], int item_cnt, bool isByname){
+    int i = 0, cursor = 0;
+    while (i<item_cnt){
+        if (item[i]->bDetele){
+            cursor = i;
+            while((item[++cursor]->bDetele)){}
+            /*item[cursor]->bDetele = false;
+            item[cursor]->dPrice = item[j]->dPrice;
+            strcpy(item[cursor]->szItemName, item[j]->szItemName);
+            item[j]->bDetele = false;*/
+            pItem tmp=item[cursor];
+            item[cursor] = item[i];
+            item[i] = tmp;
+            i++;
+        }
+        else{
+            cursor++;
+            i++;
+        }
+    }
+    /*printf("%s\n", item[0]->szItemName);
+        printf("%s\n", item[1]->szItemName);
+    printf("%s\n", item[2]->szItemName);
+
+    getchar();*/
+    if (isByname)
+        qsort(item, item_cnt, sizeof(item[0]), sort_by_name);
+    else
+        qsort(item, item_cnt, sizeof(item[0]), sort_by_price);
+    OutputAll(item,item_cnt);
+}
