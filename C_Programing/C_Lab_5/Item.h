@@ -24,5 +24,7 @@ void info_change(pItem item[], int item_cnt, const char *szItemName);
 void info_delete(pItem item[], int *item_cnt, const char *szItemName);
 void info_insert(pItem item[], int *item_cnt);
 void info_flush(pItem item[], int item_cnt);
+void output_help();
+void sort(pItem item[], int item_cnt, bool isByname);
 
 #endif

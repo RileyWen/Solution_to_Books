@@ -5,7 +5,8 @@ int main(int argc,char **argv){
     int item_cnt = 0, _argc = 0;
 
     info_init(item, &item_cnt);
-    printf("Welcome to Item Manager!\nEnter 'q' to save and quit\n");
+    printf("Welcome to Item Manager!\n");
+    output_help();
     while (1){
         printf("> ");
         gets(command);
@@ -47,6 +48,13 @@ int main(int argc,char **argv){
         if (!strcmp(_argv[0],"save")){
             info_flush(item, item_cnt);
             continue;
+        }
+        if (!strcmp(_argv[0],"help")){
+            output_help();
+            continue;
+        }
+        if (!strcmp(_argv[0],"sort")){
+            sort(item, item_cnt, 1);
         }
     }
     //info_flush
