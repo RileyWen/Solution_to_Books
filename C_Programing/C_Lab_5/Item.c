@@ -131,7 +131,6 @@ void info_delete(pItem item[], int *item_cnt, const char *szItemName){
     if (index == -1)
         printf("Not found!\n");
     else{
-        printf("index:%d\n", index);
         (*item_cnt)--;
         item[index]->bDetele = true;
     }
@@ -154,7 +153,7 @@ void info_insert(pItem item[], int *item_cnt){
         else
             i++;
     }
-    printf("%d", i);
+    //printf("%d", i);
     item[i] = (pItem)malloc(sizeof(Item));
     if (item[i]==NULL)
         return;
