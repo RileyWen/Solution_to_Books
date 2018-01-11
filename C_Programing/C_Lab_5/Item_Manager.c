@@ -55,7 +55,9 @@ int main(int argc,char **argv){
         }
         if (!strcmp(_argv[0],"sort")){
             sort(item, item_cnt, 1);
+            continue;
         }
+        printf("Not exist command!\n");
     }
     //info_flush
     //gets(command);
