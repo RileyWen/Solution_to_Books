@@ -41,6 +41,7 @@ void OutputAll(pItem item[],int item_cnt){
         return;
     }
     int cursor = 0, num = 0;
+    printf("All Item:\n");
     while (num < item_cnt)
     {
         if (item[cursor]->bDetele){
@@ -49,7 +50,7 @@ void OutputAll(pItem item[],int item_cnt){
         else{
             num++;
             printf("Item name:%s\n", item[cursor]->szItemName);
-            printf("Item price:%d\n", item[cursor]->dPrice);
+            printf("Item price:%d\n\n", item[cursor]->dPrice);
             cursor++;
         }
     }
@@ -88,9 +89,9 @@ void parse_command(char command[],int *argc,char *argv[]){
 void info_search(pItem item[], int item_cnt, const char* szItemName){
     int index = search_by_name(item, item_cnt, szItemName);
     if (index == -1)
-        printf("Not found!\n");
+        printf("%s not found!\n", szItemName);
     else
-        printf("Item price:%d\n", item[index]->dPrice);
+        printf("The price of %s: $%d\n", szItemName, item[index]->dPrice);
 }
 
 void info_output(pItem item[], int item_cnt, int i){
@@ -121,7 +122,7 @@ void info_change(pItem item[], int item_cnt, const char* szItemName){
     if (index == -1)
         printf("Not found!\n");
     else{
-        printf("Item price to change:");
+        printf("Please input the new price of %s: $", szItemName);
         scanf("%d", &item[index]->dPrice);
     }
 }
@@ -133,6 +134,7 @@ void info_delete(pItem item[], int *item_cnt, const char *szItemName){
     else{
         (*item_cnt)--;
         item[index]->bDetele = true;
+        printf("%s has been successfully deleted.\n", szItemName);
     }
 }
 
@@ -153,7 +155,7 @@ void info_insert(pItem item[], int *item_cnt){
         else
             i++;
     }
-    //printf("%d", i);
+    
     item[i] = (pItem)malloc(sizeof(Item));
     if (item[i]==NULL)
         return;
@@ -165,6 +167,7 @@ void info_insert(pItem item[], int *item_cnt){
     scanf("%d", &item[i]->dPrice);
     getchar();
     (*item_cnt)++;
+    printf("New item has been succesfully created.\n");
     return;
 }
 
@@ -201,10 +204,11 @@ void output_help(){
     printf("--------------help--------------\n");
     printf("To insert an item:\n\tinsert\n");
     printf("To delete an item:\n\tdelete <Item-name>\n");
-    printf("To output:\n\toutput [index]\t If no index, output all item. Otherwise, output the item by index.\n");
-    printf("To search item:\n\tsearch <Item-name>\n");
+    printf("To output:\n\toutput [index 1] [index 2] [index 3] ...\n\tIf no index, output all item. Otherwise, output the item by index.\n");
+    printf("To search item:\n\tsearch <Item-name 1> [item-name 2] [item-name 3] ...\n\t'search' requires at least one argument.\n");
     printf("To change the item info:\n\tchange <Item-name>\n");
-    printf("To save:\t\nsave\n");
+    printf("To save:\n\tsave\n");
+    printf("To sort items:\n\tsort <-name|-price>\n\t-name: sort by name\n\t-price: sort by price\n");
     printf("To save and quit:\n\tq\n");
     printf("To display help info:\n\thelp\n");
 }
@@ -215,7 +219,7 @@ int sort_by_name(const void *a, const void *b){
 }
 
 int sort_by_price(const void *a,const void *b){
-    return (*(pItem*)b)->dPrice - (*(pItem*)a)->dPrice;
+    return (*(pItem*)a)->dPrice - (*(pItem*)b)->dPrice;
 }
 
 void sort(pItem item[], int item_cnt, bool isByname){
@@ -243,7 +247,7 @@ void sort(pItem item[], int item_cnt, bool isByname){
     printf("%s\n", item[2]->szItemName);
 
     getchar();*/
-    if (1)
+    if (isByname)
         qsort(item, item_cnt, sizeof(item[0]), sort_by_name);
     else
         qsort(item, item_cnt, sizeof(item[0]), sort_by_price);

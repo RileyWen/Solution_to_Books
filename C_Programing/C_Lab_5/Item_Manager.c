@@ -11,8 +11,7 @@ int main(int argc,char **argv){
         printf("> ");
         gets(command);
         parse_command(command, &_argc, _argv);
-        //for (int i = 0; i< _argc;i++)
-        //    printf("%s", _argv[i]);
+        
         if (_argv[0]==NULL)
             continue;
         if (!strcmp(_argv[0], "output")){
@@ -21,12 +20,14 @@ int main(int argc,char **argv){
                 continue;
             }
             else{
-                info_output(item, item_cnt, (int)(*_argv[1] - '0'));
+                for (int i = 1; i < _argc; i++)
+                    info_output(item, item_cnt, (int)(*_argv[i] - '0'));
                 continue;
             }
         }
         if (!strcmp(_argv[0],"search")){
-            info_search(item, item_cnt, _argv[1]);
+            for (int i = 1; i < _argc; i++)
+                info_search(item, item_cnt, _argv[i]);
             continue;
         }
         if (!strcmp(_argv[0],"q")){
@@ -54,13 +55,26 @@ int main(int argc,char **argv){
             continue;
         }
         if (!strcmp(_argv[0],"sort")){
-            sort(item, item_cnt, 1);
+            if (_argc==1){
+                printf("Wrong grammer!\n");
+                continue;
+            }
+            else{
+                if (!strcmp(_argv[1],"-name")){
+                    sort(item, item_cnt, 1);
+                    continue;
+                }
+                if (!strcmp(_argv[1],"-price")){
+                    sort(item, item_cnt, 0);
+                    continue;
+                }
+                printf("Wrong grammer!\n");
+            }
             continue;
         }
         printf("Not exist command!\n");
     }
-    //info_flush
-    //gets(command);
+
     myfree(item, item_cnt);
     return 0;
 }
