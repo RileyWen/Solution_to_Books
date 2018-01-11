@@ -244,7 +244,7 @@ void sort(pItem item[], int item_cnt, bool isByname){
     printf("%s\n", item[2]->szItemName);
 
     getchar();*/
-    if (isByname)
+    if (1)
         qsort(item, item_cnt, sizeof(item[0]), sort_by_name);
     else
         qsort(item, item_cnt, sizeof(item[0]), sort_by_price);
