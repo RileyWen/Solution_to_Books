@@ -1,7 +1,7 @@
 #include "Item.h"
 int main(int argc,char **argv){
     char command[255], *_argv[255];
-    pItem item[255]={0};
+    pItem item[MAX_ITEM]={0};
     int item_cnt = 0, _argc = 0;
 
     info_init(item, &item_cnt);
@@ -20,8 +20,11 @@ int main(int argc,char **argv){
                 continue;
             }
             else{
-                for (int i = 1; i < _argc; i++)
-                    info_output(item, item_cnt, (int)(*_argv[i] - '0'));
+                int index;
+                for (int i = 1; i < _argc; i++){
+                    sscanf(_argv[i], "%d", &index);
+                    info_output(item, item_cnt, index);
+                }
                 continue;
             }
         }

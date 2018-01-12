@@ -8,6 +8,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+#define MAX_ITEM 255
+
 typedef struct _Item{
     bool bDetele;
     int dPrice;

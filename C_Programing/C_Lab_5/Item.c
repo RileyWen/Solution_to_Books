@@ -97,7 +97,6 @@ void info_search(pItem item[], int item_cnt, const char* szItemName){
 void info_output(pItem item[], int item_cnt, int i){
     int cursor = 0, num = 0;
     bool isfound = false;
-    //printf("cursor:%d\n", cursor);
     while (num < item_cnt)
     {
         if (item[cursor]->bDetele){
@@ -107,14 +106,15 @@ void info_output(pItem item[], int item_cnt, int i){
             num++;
             if (num==i){
                 printf("Item name:%s\n", item[cursor]->szItemName);
-                printf("Item price:%d\n", item[cursor]->dPrice);
+                printf("Item price:%d\n\n", item[cursor]->dPrice);
                 isfound = true;
                 break;
             }
+            cursor++;
         }
     }
     if (!isfound)
-        printf("Not Found\n");
+        printf("Index %d not Found\n\n",i);
 }
 
 void info_change(pItem item[], int item_cnt, const char* szItemName){
@@ -124,6 +124,8 @@ void info_change(pItem item[], int item_cnt, const char* szItemName){
     else{
         printf("Please input the new price of %s: $", szItemName);
         scanf("%d", &item[index]->dPrice);
+        getchar();
+        printf("The price of %s has been changed successfully.\n", szItemName);
     }
 }
 
@@ -140,6 +142,14 @@ void info_delete(pItem item[], int *item_cnt, const char *szItemName){
 
 void info_insert(pItem item[], int *item_cnt){
     int i = 0;
+    if (*item_cnt<=MAX_ITEM){
+        printf("Till now, you can still insert %d item(s).\n",
+               MAX_ITEM - *item_cnt);
+    }
+    else{
+        printf("Out of space! Please delete some items.\n");
+        return;
+    }
     while(i<*item_cnt){
         if (item[i]->bDetele){
             item[i]->bDetele = false;
@@ -180,6 +190,7 @@ void info_flush(pItem item[], int item_cnt){
         if (!item_cnt){
             fprintf(pFile, "0\n");
             fclose(pFile);
+            printf("Succesfully saved.\n");
             return;
         }
         fprintf(pFile, "%d\n", item_cnt);
@@ -198,10 +209,11 @@ void info_flush(pItem item[], int item_cnt){
         }
     }
     fclose(pFile);
+    printf("Succesfully saved.\n");
 }
 
 void output_help(){
-    printf("--------------help--------------\n");
+    printf("--------------HELP------------------------------------\n");
     printf("To insert an item:\n\tinsert\n");
     printf("To delete an item:\n\tdelete <Item-name>\n");
     printf("To output:\n\toutput [index 1] [index 2] [index 3] ...\n\tIf no index, output all item. Otherwise, output the item by index.\n");
@@ -214,7 +226,6 @@ void output_help(){
 }
 
 int sort_by_name(const void *a, const void *b){
-    //printf("A:%s\nB:%s\n",(*(pItem*)a)->szItemName,(*(pItem*)b)->szItemName);
     return strcmp((*(pItem*)a)->szItemName, (*(pItem*)b)->szItemName);
 }
 
@@ -228,10 +239,6 @@ void sort(pItem item[], int item_cnt, bool isByname){
         if (item[i]->bDetele){
             cursor = i;
             while((item[++cursor]->bDetele)){}
-            /*item[cursor]->bDetele = false;
-            item[cursor]->dPrice = item[j]->dPrice;
-            strcpy(item[cursor]->szItemName, item[j]->szItemName);
-            item[j]->bDetele = false;*/
             pItem tmp=item[cursor];
             item[cursor] = item[i];
             item[i] = tmp;
@@ -242,11 +249,7 @@ void sort(pItem item[], int item_cnt, bool isByname){
             i++;
         }
     }
-    /*printf("%s\n", item[0]->szItemName);
-        printf("%s\n", item[1]->szItemName);
-    printf("%s\n", item[2]->szItemName);
 
-    getchar();*/
     if (isByname)
         qsort(item, item_cnt, sizeof(item[0]), sort_by_name);
     else
