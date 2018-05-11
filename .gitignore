@@ -2,4 +2,5 @@
 *.pdf
 *.txt
 *.o
-.vscode/
+.vscode/task.json
+.vscode/launch.json

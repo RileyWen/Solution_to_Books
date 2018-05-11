@@ -1,0 +1,40 @@
+{
+    "files.defaultLanguage": "cpp",
+
+    "editor.formatOnType": true,
+    "editor.snippetSuggestions": "top",
+
+    "clang.cflags": [
+        "-std=c11",
+        "-Wall"
+    ],
+    "clang.cxxflags": [
+        "-std=c++14",
+        "-Wall"
+    ],
+    "clang.diagnostic.delay": 300,
+    "clang.diagnostic.enable": true,
+    "clang.completion.triggerChars": [
+        ".",
+        ":",
+        ">"
+    ],
+
+    "C_Cpp.clang_format_fallbackStyle": "Visual Studio",
+    "C_Cpp.clang_format_sortIncludes": true,
+    "C_Cpp.autocomplete": "Default",
+    "C_Cpp.intelliSenseEngine": "Default",
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "C_Cpp.errorSquiggles": "Disabled",
+    "C_Cpp.formatting": "Default",
+
+    "code-runner.executorMap": {
+        "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt" 
+    },
+    "code-runner.runInTerminal": true,
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.preserveFocus": true,
+    "code-runner.clearPreviousOutput": false,
+
+}
